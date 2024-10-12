@@ -20,7 +20,7 @@ services:
     container_name: blog-db
     image: postgres:15
     environment:
-      POSTGRES_DB: "blog_database"
+      POSTGRES_DB: "tech_ledger_blog_db"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "pg12345"
     volumes:
