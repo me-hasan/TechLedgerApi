@@ -14,10 +14,10 @@ public class BlogService {
     public BlogRepo repo;
 
     public List<BlogPost> getAllBlogs(){
-        return repo.getAllBlogs();
+        return repo.findAll();
     }
 
     public void addBlogPost(BlogPost blogPost){
-        repo.addBlog(blogPost);
+        repo.save(blogPost);
     }
 }
