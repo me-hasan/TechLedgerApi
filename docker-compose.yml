@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  blogapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8899:8899"
+    container_name: techledger_app
+    networks:
+      - wingsfinnet
+    environment:
+      - SERVER_PORT=8899
+      - DATASOURCE_URL=jdbc:postgresql://localhost:5432/blog_database
+      - DATASOURCE_USERNAME=postgres
+      - DATASOURCE_PASSWORD=pg12345
+
+  blogdb:
+    container_name: blog-db
+    image: postgres:15
+    environment:
+      POSTGRES_DB: "blog_database"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "pg12345"
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - wingsfinnet
+
+networks:
+  wingsfinnet:
+    external: true
