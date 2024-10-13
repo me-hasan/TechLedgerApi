@@ -1,6 +1,4 @@
-Here's an updated `README.md` file that combines the structure of your previous README with the new details for enhanced clarity. It maintains your Docker instructions and includes API endpoint details.
 
-```markdown
 # Tech Ledger API
 
 ## Overview
