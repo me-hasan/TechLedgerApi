@@ -11,39 +11,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/blogPost")
 public class CommentController {
 
     @Autowired
     private CommnetService service;
 
-    @GetMapping("/comments")
-    public ResponseEntity<List<BlogComment>> getAllBlogs() {
-        List<BlogComment> blogComments = service.getAllComments();
+    @GetMapping("{blogPostId}/comments")
+    public ResponseEntity<List<BlogComment>> getAllCommentsByBlog(@PathVariable Long blogPostId) {
+        List<BlogComment> blogComments = service.getAllCommentsByBlogPostId(blogPostId);
         return ResponseEntity.ok(blogComments);
     }
 
-    @PostMapping("/comment")
-    public ResponseEntity<BlogComment> addBlog(@RequestBody BlogComment blogComment) {
-        BlogComment savedComment = service.addUser(blogComment);
+    @PostMapping("{blogPostId}/comment")
+    public ResponseEntity<BlogComment> addNewCommentByBlog(@PathVariable Long blogPostId, @RequestBody BlogComment blogComment) {
+        BlogComment savedComment = service.addNewCommentByBlogPostId(blogPostId, blogComment);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
     }
 
-    @GetMapping("/comment/{commentId}")
-    public ResponseEntity<BlogComment> getUserByUserId(@PathVariable int commentId) {
-        BlogComment comment = service.getComment(commentId);
-        return ResponseEntity.ok(comment);
-    }
-
     @PutMapping("/comment/{commentId}")
-    public ResponseEntity<BlogComment> updateUserByUserId(@PathVariable int commentId, @RequestBody BlogComment updatedComment) {
+    public ResponseEntity<BlogComment> updateCommentByCommentId(@PathVariable int commentId, @RequestBody BlogComment updatedComment) {
         BlogComment updateComment = service.updateComment(commentId, updatedComment);
         return ResponseEntity.ok(updateComment);
     }
 
     @DeleteMapping("/comment/{commentId}")
-    public ResponseEntity<String> deleteBlogPostByPostId(@PathVariable int commentId) {
+    public ResponseEntity<String> deleteCommentByCommentId(@PathVariable int commentId) {
         service.deleteComment(commentId);
-        return ResponseEntity.ok("Deleted Successfully!");
+        return ResponseEntity.ok("Deleted Successfully!"); // Returns 204 No Content on successful deletion
     }
 }
