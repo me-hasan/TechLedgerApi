@@ -41,7 +41,7 @@ Once the application is running, you can access the API at:
 http://localhost:8899
 ```
 
-## API Endpoints
+## Blog Post API Endpoints
 
 | Method | Endpoint         | Description                        | Request Body                          |
 | ------ |------------------| ---------------------------------- | ------------------------------------- |
@@ -51,7 +51,7 @@ http://localhost:8899
 | PUT    | `/api/blogPost/{id}` | Update an existing blog post by ID | JSON with `title` and `content`       |
 | DELETE | `/api/blogPost/{id}` | Delete a blog post by ID           | None                                  |
 
-### Example Usage
+### Usage
 
 #### Get All Blog Posts
 - **Request**:
@@ -98,6 +98,68 @@ http://localhost:8899
   ```
 - **Response**:
   Returns `200 OK` if the deletion was successful, or `404 Not Found` if the post does not exist.
+
+
+## Comments API Endpoints
+
+| Method | Endpoint                              | Description                        | Request Body                    |
+| ----- |---------------------------------------| ---------------------------------- | ------------------------------- |
+| GET   | `/api/blogPost/{blogPostId}/comments	` | Retrieve all comments for a specific blog post           | None                            |
+|POST   | `/api/blogPost/{blogPostId}/comment`     | Create a new comment for a specific blog post      | JSON with userId, name, content, status |
+| PUT   | `/api/blogPost/comment/{id}`                 | Update a comment by ID | JSON with content, status     |
+| DELETE | `/api/blogPost/comment/{id}`          | Delete a comment by ID         | None                            |
+
+### Usage
+
+#### Get All Blog Posts
+- **Request**:
+  ```bash
+  GET /api/blogPost/{blogPostId}/comments
+  ```
+- **Response**:
+  Returns a list of all comments.
+
+#### Create a New Comment
+- **Request**:
+  ```bash
+  POST /api/blogPost/{blogPostId}/comment
+  ```
+- **Request Body**:
+  ```json
+  {
+    "blogPostId": 1,
+    "userId": 2,
+    "name": "John Doe",
+    "content": "This is a comment on the blog post.",
+    "status": true
+  }
+  ```
+- **Response**:
+  Returns the created comment with `201 Created` status.
+
+#### Update an Existing Comment
+- **Request**:
+  ```bash
+  PUT /api/blogPost/comment/{id}
+  ```
+- **Request Body**:
+  ```json
+  {
+    "content": "This is an updated comment on the blog post. has been updated by khayrul",
+    "status": true
+  }
+  ```
+- **Response**:
+  Returns the updated comment.
+
+#### Delete a Comment
+- **Request**:
+  ```bash
+  DELETE /api/blogPost/comment/{id}
+  ```
+- **Response**:
+  Returns `200 OK` if the deletion was successful, or `404 Not Found` if the comment does not exist.
+
 
 ## Testing the API
 You can use Postman or any other API testing tool to interact with the API endpoints. Make sure to set the correct HTTP method and request body format as shown in the examples above.

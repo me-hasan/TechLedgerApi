@@ -13,18 +13,14 @@ public class CommnetService {
 
     @Autowired
     private CommentRepo repo;
-    
-    public List<BlogComment> getAllComments() {
-        return repo.findAll();
+
+    public List<BlogComment> getAllCommentsByBlogPostId(Long blogPostId) {
+        return repo.findByBlogPostId(blogPostId);
     }
 
-    public BlogComment addUser(BlogComment blogComment) {
+    public BlogComment addNewCommentByBlogPostId(Long blogPostId, BlogComment blogComment) {
+        blogComment.setBlogPostId(blogPostId); // Ensure blogPostId is set
         return repo.save(blogComment);
-    }
-
-    public BlogComment getComment(int commentId) {
-        return repo.findById(commentId)
-                .orElseThrow(() -> new ResourceNotFoundException("CommentPost not found with id " + commentId));
     }
 
     public BlogComment updateComment(int commentId, BlogComment updatedComment) {
@@ -33,13 +29,13 @@ public class CommnetService {
 
         existingComment.setContent(updatedComment.getContent());
         existingComment.setStatus(updatedComment.getStatus());
-        
+
         return repo.save(existingComment);
     }
 
     public void deleteComment(int commentId) {
         if (!repo.existsById(commentId)) {
-            throw new ResourceNotFoundException("CommentPost not found with id " + commentId);
+            throw new ResourceNotFoundException("Comment not found with id " + commentId);
         }
         repo.deleteById(commentId);
     }
