@@ -1,14 +1,12 @@
 package com.binarydesign.techledgerapi.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 @Component
 @Entity
+@Table(name = "blog_posts") // Custom table name
 public class BlogPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
