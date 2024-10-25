@@ -45,7 +45,7 @@ http://localhost:8899
 
 | Method | Endpoint         | Description                        | Request Body                          |
 | ------ |------------------| ---------------------------------- | ------------------------------------- |
-| GET    | `/api/blogPosts` | Retrieve all blog posts            | None                                  |
+| GET    | `/api/blogPost` | Retrieve all blog posts            | None                                  |
 | GET    | `/api/blogPost/{id}` | Retrieve a single blog post by ID  | None                                  |
 | POST   | `/api/blogPost`      | Create a new blog post             | JSON with `title` and `content`       |
 | PUT    | `/api/blogPost/{id}` | Update an existing blog post by ID | JSON with `title` and `content`       |
@@ -56,7 +56,7 @@ http://localhost:8899
 #### Get All Blog Posts
 - **Request**:
   ```bash
-  GET /api/blogPosts
+  GET /api/blogPost
   ```
 - **Response**:
   Returns a list of all blog posts.
