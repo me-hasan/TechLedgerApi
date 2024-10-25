@@ -2,7 +2,11 @@ package com.binarydesign.techledgerapi.model;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 @Component
 @Entity
@@ -15,6 +19,14 @@ public class BlogPost {
     private String content;
     private int userId;
     private boolean status;
+
+    @Column(name = "created_at", updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     public Long getId() {
         return id;
@@ -54,5 +66,21 @@ public class BlogPost {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
