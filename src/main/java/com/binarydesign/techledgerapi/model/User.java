@@ -6,10 +6,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Component
 @Entity
-@Table(name = "users") // Custom table name
+@Table(name = "users")
 public class User {
 
     @Id
@@ -20,16 +21,13 @@ public class User {
     private String phone;
     private String email;
     private String address;
+
+    @JsonIgnore // Prevent password from being included in JSON responses
     private String password;
+
     private Boolean status;
 
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
+    // Getters and setters...
 
     public Long getId() {
         return id;
@@ -86,4 +84,13 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 }
+

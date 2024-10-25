@@ -4,6 +4,7 @@ import com.binarydesign.techledgerapi.exception.ResourceNotFoundException;
 import com.binarydesign.techledgerapi.model.User;
 import com.binarydesign.techledgerapi.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,16 @@ public class UserService {
     @Autowired
     private UserRepo repo;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
     public List<User> getAllUsers() {
         return repo.findAll();
     }
 
     public User addUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        String hashedPassword = passwordEncoder.encode("123456");
+        user.setPassword(hashedPassword);
         return repo.save(user);
     }
 
