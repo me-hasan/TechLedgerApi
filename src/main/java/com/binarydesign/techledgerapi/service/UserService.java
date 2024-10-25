@@ -4,6 +4,7 @@ import com.binarydesign.techledgerapi.exception.ResourceNotFoundException;
 import com.binarydesign.techledgerapi.model.User;
 import com.binarydesign.techledgerapi.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +15,15 @@ public class UserService {
     @Autowired
     private UserRepo repo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<User> getAllUsers() {
         return repo.findAll();
     }
 
     public User addUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repo.save(user);
     }
 
@@ -32,7 +37,7 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
 
         existUesr.setEmail(updatedUser.getEmail());
-        existUesr.setUsername(updatedUser.getUsername());
+        existUesr.setUserName(updatedUser.getUserName());
 
         return repo.save(existUesr);
     }
