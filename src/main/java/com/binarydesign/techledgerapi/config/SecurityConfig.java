@@ -16,7 +16,10 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Disable CSRF protection
                 .authorizeRequests(auth -> auth
-                        .anyRequest().permitAll() // Allow all requests without authentication
+//                        .anyRequest().permitAll() // Allow all requests without authentication
+                        .requestMatchers("/api/blogPosts", "/api/blogPost/*", "/api/blogPost/*/comments", "/api/user")
+                        .permitAll()
+                        .anyRequest().authenticated()
                 );
 
         return http.build();
