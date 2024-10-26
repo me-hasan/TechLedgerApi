@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public User addUser(User user) {
-        String hashedPassword = passwordEncoder.encode("123456");
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         return repo.save(user);
     }
@@ -38,7 +38,7 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
 
         existUesr.setEmail(updatedUser.getEmail());
-        existUesr.setUserName(updatedUser.getUserName());
+        existUesr.setUsername(updatedUser.getUsername());
 
         return repo.save(existUesr);
     }
