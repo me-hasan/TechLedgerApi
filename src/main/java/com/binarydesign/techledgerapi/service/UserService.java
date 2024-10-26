@@ -2,10 +2,9 @@ package com.binarydesign.techledgerapi.service;
 
 import com.binarydesign.techledgerapi.exception.ResourceNotFoundException;
 import com.binarydesign.techledgerapi.model.User;
-import com.binarydesign.techledgerapi.repo.UserRepo;
+import com.binarydesign.techledgerapi.dao.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class UserService {
     }
 
     public User addUser(User user) {
-        String hashedPassword = passwordEncoder.encode("123456");
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         return repo.save(user);
     }
@@ -39,7 +38,7 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id " + userId));
 
         existUesr.setEmail(updatedUser.getEmail());
-        existUesr.setUserName(updatedUser.getUserName());
+        existUesr.setUsername(updatedUser.getUsername());
 
         return repo.save(existUesr);
     }

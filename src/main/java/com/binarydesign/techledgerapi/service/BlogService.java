@@ -2,7 +2,7 @@ package com.binarydesign.techledgerapi.service;
 
 import com.binarydesign.techledgerapi.exception.ResourceNotFoundException;
 import com.binarydesign.techledgerapi.model.BlogPost;
-import com.binarydesign.techledgerapi.repo.BlogRepo;
+import com.binarydesign.techledgerapi.dao.BlogRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

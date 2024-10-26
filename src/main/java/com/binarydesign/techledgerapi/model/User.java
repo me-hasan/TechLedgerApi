@@ -17,14 +17,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String fullName;
-    private String userName;
+    private String username;
     private String phone;
     private String email;
     private String address;
-
-    @JsonIgnore // Prevent password from being included in JSON responses
     private String password;
-
     private Boolean status;
 
     // Getters and setters...
@@ -45,12 +42,12 @@ public class User {
         this.fullName = fullName;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPhone() {
@@ -91,6 +88,20 @@ public class User {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", username='" + username + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                '}';
     }
 }
 
