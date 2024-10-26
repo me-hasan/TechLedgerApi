@@ -21,19 +21,28 @@ Navigate to the project directory:
 cd techledger-api
 ```
 
-### 2. Build the Docker Image
+### 2. **Build the Project:**
+   Use the `mvn package` command to compile the code and package it into a `.jar` file.
+   ```bash
+   mvn package
+   ```
+
+   This will generate a packaged `.jar` file in the `target` directory, which you can then use to run the application.
+
+
+### 3. Build the Docker Image
 From the project root, build the Docker image:
 ```bash
 docker-compose up --build
 ```
 
-### 3. Run the Application with Docker Compose
+### 4. Run the Application with Docker Compose
 Start the application and all defined services (e.g., database):
 ```bash
 docker-compose up -d
 ```
 
-### 4. Access the API
+### 5. Access the API
 Once the application is running, you can access the API at:
 ```
 http://localhost:8899
@@ -87,4 +96,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 - [Postman](https://www.postman.com/)
+
+
 
