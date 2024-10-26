@@ -1,4 +1,4 @@
-package com.binarydesign.techledgerapi.repo;
+package com.binarydesign.techledgerapi.dao;
 
 
 import com.binarydesign.techledgerapi.model.BlogPost;
