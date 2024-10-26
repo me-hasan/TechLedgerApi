@@ -127,9 +127,7 @@ http://localhost:8899
 - **Request Body**:
   ```json
   {
-    "blogPostId": 1,
     "userId": 2,
-    "name": "John Doe",
     "content": "This is a comment on the blog post.",
     "status": true
   }
