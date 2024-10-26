@@ -39,7 +39,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable()) // Disable CSRF protection //anyRequest().permitAll()
                 .authorizeRequests(auth -> auth
-                        .requestMatchers("/api/blogPosts", "/api/blogPost/*", "/api/blogPost/*/comments", "/api/user", "/api/login")
+                        .requestMatchers("/api/user", "/api/login", "/api/blogPostsWithComments")
                         .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -1,0 +1,667 @@
+{
+	"info": {
+		"_postman_id": "750d8aa3-748c-47b3-9f0f-5c84f2012023",
+		"name": "blog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31847181"
+	},
+	"item": [
+		{
+			"name": "public",
+			"item": [
+				{
+					"name": "Add new user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\": \"John Doe\",\n    \"username\": \"Khayrul\",\n    \"phone\": \"1234567890\",\n    \"password\": \"123456\",\n    \"email\": \"john@example.com\",\n    \"address\": \"123 Main Street\",\n    \"status\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-all-blogs-with-comments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8899/api/blogPostsWithComments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"api",
+								"blogPostsWithComments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// pm.environment.set(\"accessTkn\", pm.response.text());",
+									"// pm.variables.get(\"accessTkn\");",
+									"// pm.environment.set(\"accessTkn\", \"accessTkn\");",
+									"pm.collectionVariables.set(\"token\", pm.response.text());",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"Khayrul\",\n  \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8899/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8899",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "private",
+			"item": [
+				{
+					"name": "comments",
+					"item": [
+						{
+							"name": "get-all-comments",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8899/api/blogPost/4/comments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"blogPost",
+										"4",
+										"comments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add new comment",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 2,\n    \"content\": \"This is a comment on Test\",\n    \"status\": true\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8899/api/blogPost/2/comment",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"blogPost",
+										"2",
+										"comment"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-comment-by-id",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"This is an updated comment on the blog post. has been update by khayrul\",\n    \"status\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8899/api/blogPost/comment/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"blogPost",
+										"comment",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-comment-by-id",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8899/api/blogPost/comment/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"blogPost",
+										"comment",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "post",
+					"item": [
+						{
+							"name": "Add new blog",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Se New post for fins Khayrul hasan\",\n    \"content\": \"This is dummy text dsfsdf dsfsdf\",\n    \"userId\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8899/api/blogPost",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"blogPost"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-all-blogs",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8899/api/blogPosts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"blogPosts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-blogs-by-id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8899/api/blogPost/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"blogPost",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-blogs-by-id",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Updated Blog Post Title hello\",\n    \"content\": \"Updated content for the blog post.\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8899/api/blogPost/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"blogPost",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-blogs-by-id",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8899/api/blogPost/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"blogPost",
+										"6"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "get-user-by-id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8899/api/user/35",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"user",
+										"35"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-user-by-id",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userName\": \"Updated Blog Post Title hello\",\n    \"email\": \"Updated content for the blog post.\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8899/api/user/35",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"user",
+										"35"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-all-users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8899/api/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-user-by-id",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8899/api/user/34",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8899",
+									"path": [
+										"api",
+										"user",
+										"34"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "accessToken",
+			"value": ""
+		},
+		{
+			"key": "accessTkn",
+			"value": ""
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}

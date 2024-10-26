@@ -1,11 +1,10 @@
-
-# Tech Ledger API
+# Tech Ledger API (Blog)
 
 ## Overview
-Tech Ledger API is a Spring Boot application that provides a RESTful API for managing blog posts. This application allows users to create, read, update, and delete blog entries.
+Tech Ledger API is a Spring Boot application that provides a RESTful API for managing blog posts. The application allows authenticated users to create, read, update, and delete blog entries and supports user authentication with JWT.
 
 ## Prerequisites
-Before you run the application, ensure you have the following installed on your system:
+Ensure you have the following installed on your system:
 - **Docker**: Install from [Docker's official site](https://www.docker.com/get-started).
 - **Docker Compose**: Usually comes with Docker Desktop. If not, you can find instructions [here](https://docs.docker.com/compose/install/).
 - **Postman** (or any API testing tool): To test the API endpoints.
@@ -13,27 +12,26 @@ Before you run the application, ensure you have the following installed on your 
 ## Getting Started
 
 ### 1. Clone the Repository
-Clone this repository to your local machine using the following command:
+Clone this repository to your local machine:
 ```bash
 git clone https://github.com/me-hasan/techledger-api.git
 ```
-Change to the project directory:
+Navigate to the project directory:
 ```bash
 cd techledger-api
 ```
 
 ### 2. Build the Docker Image
-Navigate to the root directory of the project and build the Docker image using the following command:
+From the project root, build the Docker image:
 ```bash
 docker-compose up --build
 ```
 
 ### 3. Run the Application with Docker Compose
-You can run the application along with any necessary services (like a database) using Docker Compose:
+Start the application and all defined services (e.g., database):
 ```bash
 docker-compose up -d
 ```
-This will start the application and any other defined services (e.g., a database) as specified in the `docker-compose.yml` file.
 
 ### 4. Access the API
 Once the application is running, you can access the API at:
@@ -41,129 +39,45 @@ Once the application is running, you can access the API at:
 http://localhost:8899
 ```
 
-## Blog Post API Endpoints
+## JWT Authentication
+The Tech Ledger API uses JWT (JSON Web Token) for authentication. After a successful login, clients receive a token, which they must include in the `Authorization` header for accessing secure endpoints. Only the following endpoints are public and do not require a token:
 
-| Method | Endpoint         | Description                        | Request Body                          |
-| ------ |------------------| ---------------------------------- | ------------------------------------- |
-| GET    | `/api/blogPost` | Retrieve all blog posts            | None                                  |
-| GET    | `/api/blogPost/{id}` | Retrieve a single blog post by ID  | None                                  |
-| POST   | `/api/blogPost`      | Create a new blog post             | JSON with `title` and `content`       |
-| PUT    | `/api/blogPost/{id}` | Update an existing blog post by ID | JSON with `title` and `content`       |
-| DELETE | `/api/blogPost/{id}` | Delete a blog post by ID           | None                                  |
+- **Public Endpoints**
+  - `GET /api/user`
+  - `POST /api/login`
+  - `GET /api/blogPostsWithComments`
 
-### Usage
+Other endpoints require an authenticated user. Ensure to include the JWT token with requests as follows:
+```
+Authorization: Bearer your_token_here
+```
 
-#### Get All Blog Posts
-- **Request**:
-  ```bash
-  GET /api/blogPost
-  ```
-- **Response**:
-  Returns a list of all blog posts.
+## Postman Collection
+For testing purposes, a Postman collection is provided to make interacting with the API easier. Import the `TechLedgerAPI.postman_collection.json` file found in this repository to access predefined requests for all endpoints, including examples for authentication and authorized requests.
 
-#### Create a New Blog Post
-- **Request**:
-  ```bash
-  POST /api/blogPost
-  ```
-- **Request Body**:
-  ```json
-  {
-      "title": "Your blog title",
-      "content": "Your blog content"
-  }
-  ```
-- **Response**:
-  Returns the created blog post with `201 Created` status.
+### Import Postman Collection
+1. Open Postman and select **Import**.
+2. Choose **Upload Files** and select `TechLedgerAPI.postman_collection.json`.
+3. The collection should now be available in your Postman, complete with setup for authentication and public endpoints.
 
-#### Update an Existing Blog Post
-- **Request**:
-  ```bash
-  PUT /api/blogPost/{id}
-  ```
-- **Request Body**:
-  ```json
-  {
-      "title": "Updated title",
-      "content": "Updated content"
-  }
-  ```
-- **Response**:
-  Returns the updated blog post.
+## Running API Endpoints
 
-#### Delete a Blog Post
-- **Request**:
-  ```bash
-  DELETE /api/blogPost/{id}
-  ```
-- **Response**:
-  Returns `200 OK` if the deletion was successful, or `404 Not Found` if the post does not exist.
+### Blog Post API Endpoints
+API endpoints for managing blog posts allow CRUD operations. The details of each endpoint, including methods, URL paths, and request bodies, are provided in the Postman collection.
 
+### Comments API Endpoints
+Endpoints for managing comments on blog posts are also included in the Postman collection.
 
-## Comments API Endpoints
-
-| Method | Endpoint                              | Description                        | Request Body                    |
-| ----- |---------------------------------------| ---------------------------------- | ------------------------------- |
-| GET   | `/api/blogPost/{blogPostId}/comments	` | Retrieve all comments for a specific blog post           | None                            |
-|POST   | `/api/blogPost/{blogPostId}/comment`     | Create a new comment for a specific blog post      | JSON with userId, name, content, status |
-| PUT   | `/api/blogPost/comment/{id}`                 | Update a comment by ID | JSON with content, status     |
-| DELETE | `/api/blogPost/comment/{id}`          | Delete a comment by ID         | None                            |
-
-### Usage
-
-#### Get All Blog Posts
-- **Request**:
-  ```bash
-  GET /api/blogPost/{blogPostId}/comments
-  ```
-- **Response**:
-  Returns a list of all comments.
-
-#### Create a New Comment
-- **Request**:
-  ```bash
-  POST /api/blogPost/{blogPostId}/comment
-  ```
-- **Request Body**:
-  ```json
-  {
-    "userId": 2,
-    "content": "This is a comment on the blog post.",
-    "status": true
-  }
-  ```
-- **Response**:
-  Returns the created comment with `201 Created` status.
-
-#### Update an Existing Comment
-- **Request**:
-  ```bash
-  PUT /api/blogPost/comment/{id}
-  ```
-- **Request Body**:
-  ```json
-  {
-    "content": "This is an updated comment on the blog post. has been updated by khayrul",
-    "status": true
-  }
-  ```
-- **Response**:
-  Returns the updated comment.
-
-#### Delete a Comment
-- **Request**:
-  ```bash
-  DELETE /api/blogPost/comment/{id}
-  ```
-- **Response**:
-  Returns `200 OK` if the deletion was successful, or `404 Not Found` if the comment does not exist.
-
+### Authentication Endpoints
+The API supports basic user authentication via the `/api/login` endpoint, returning a JWT token on successful authentication.
 
 ## Testing the API
-You can use Postman or any other API testing tool to interact with the API endpoints. Make sure to set the correct HTTP method and request body format as shown in the examples above.
+Using Postman or any other API testing tool:
+1. Import the Postman collection to view and test all available endpoints.
+2. For secure endpoints, authenticate via `/api/login` and use the received token for subsequent requests.
 
 ## Troubleshooting
-If you encounter any issues, check the console for error messages. Ensure that your database is properly configured and that all necessary services are running.
+If you encounter any issues, check the console logs for error messages, verify the database configuration, and ensure all services are running.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -173,6 +87,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
 - [Postman](https://www.postman.com/)
-
----
 
